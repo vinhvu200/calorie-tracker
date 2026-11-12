@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Calories</title>
+  <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16181a" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Calories">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="day-nav">
+      <button class="icon-btn" id="prevDay" aria-label="Previous day">‹</button>
+      <div class="day-label">
+        <h1 id="dayTitle">Today</h1>
+        <p id="dayDate"></p>
+      </div>
+      <button class="icon-btn" id="nextDay" aria-label="Next day">›</button>
+    </header>
+
+    <section class="summary" aria-live="polite">
+      <div class="ring" id="ring">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-track" cx="60" cy="60" r="52"/>
+          <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="52"/>
+        </svg>
+        <div class="ring-text">
+          <strong id="remaining">2000</strong>
+          <span id="remainingLabel">left</span>
+        </div>
+      </div>
+      <dl class="stats">
+        <div><dt>Eaten</dt><dd id="eaten">0</dd></div>
+        <div><dt>Goal</dt><dd><button class="link-btn" id="goalBtn">2000</button></dd></div>
+      </dl>
+    </section>
+
+    <form class="add-form" id="addForm" autocomplete="off">
+      <input id="foodName" name="name" type="text" placeholder="Food" required maxlength="60" list="recentList" enterkeyhint="next">
+      <input id="foodCal" name="cal" type="number" inputmode="numeric" placeholder="kcal" required min="0" max="10000" step="1" enterkeyhint="done">
+      <button type="submit" class="primary">Add</button>
+      <datalist id="recentList"></datalist>
+    </form>
+
+    <section class="quick" id="quickSection" hidden>
+      <h2>Quick add</h2>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="log">
+      <h2>Log</h2>
+      <ul id="entries"></ul>
+      <p class="empty" id="empty">Nothing logged yet.</p>
+    </section>
+
+    <footer class="footer">
+      <button class="link-btn" id="exportBtn">Export backup</button>
+      <span aria-hidden="true">·</span>
+      <label class="link-btn" for="importFile">Import backup</label>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <p class="hint" id="installHint">Tip: add this page to your home screen so it opens like an app and your log stays saved.</p>
+    </footer>
+  </main>
+
+  <dialog id="goalDialog">
+    <form method="dialog" id="goalForm">
+      <h2>Daily goal</h2>
+      <input id="goalInput" type="number" inputmode="numeric" min="500" max="10000" step="10" required>
+      <div class="dialog-actions">
+        <button value="cancel" formnovalidate class="ghost">Cancel</button>
+        <button value="save" class="primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden>
+    <span id="toastMsg"></span>
+    <button class="link-btn" id="toastUndo">Undo</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
